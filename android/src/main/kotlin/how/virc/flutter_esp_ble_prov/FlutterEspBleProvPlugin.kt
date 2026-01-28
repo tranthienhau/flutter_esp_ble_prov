@@ -263,11 +263,15 @@ class BleScanManager(boss: Boss) : ActionManager(boss) {
       override fun onPeripheralFound(device: BluetoothDevice?, scanResult: ScanResult?) {
         device ?: return
         scanResult ?: return
-        boss.devices.put(device.name, BleConnector(device, scanResult))
+        boss.devices[device.name] = BleConnector(device, scanResult)
       }
 
       override fun scanCompleted() {
-        ctx.result.success(ArrayList<String>(boss.devices.keys))
+        val name = boss.devices.mapNotNull {
+            val device = it.value.device
+            "${device.name}_${device.address}"
+        }.toTypedArray()
+        ctx.result.success(name)
         boss.d("searchBleEspDevices: scanComplete")
       }
 

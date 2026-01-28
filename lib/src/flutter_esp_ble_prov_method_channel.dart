@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 
+import 'device.dart';
 import 'flutter_esp_ble_prov_platform_interface.dart';
 
 /// An implementation of [FlutterEspBleProvPlatform] that uses method channels.
@@ -17,15 +18,12 @@ class MethodChannelFlutterEspBleProv extends FlutterEspBleProvPlatform {
   }
 
   @override
-  Future<List<String>> scanBleDevices(String prefix) async {
+  Future<List<Device>> scanBleDevices(String prefix) async {
     final args = {'prefix': prefix};
     final raw =
         await methodChannel.invokeMethod<List<Object?>>('scanBleDevices', args);
-    final List<String> devices = [];
-    if (raw != null) {
-      devices.addAll(raw.cast<String>());
-    }
-    return devices;
+    if (raw == null) return [];
+    return raw.cast<String>().map((e) => Device.fromNativeString(e)).toList();
   }
 
   @override

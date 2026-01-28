@@ -77,9 +77,10 @@ private class BLEProvisionService: ProvisionService {
             if(error != nil) {
                 ESPErrorHandler.handle(error: error!, result: self.result)
             }
-            self.result(deviceList?.map({ (device: ESPDevice) -> String in
-                return device.name
-            }))
+            let names = deviceList?.map({ (device: ESPDevice) -> String in
+                return "\(device.name)_\(device.peripheral?.identifier.uuidString ?? "")"
+            })
+            self.result(names)
         }
     }
     

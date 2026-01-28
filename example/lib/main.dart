@@ -21,7 +21,7 @@ class _MyAppState extends State<MyApp> {
   final defaultPadding = 12.0;
   final defaultDevicePrefix = 'PROV';
 
-  List<String> devices = [];
+  List<Device> devices = [];
   List<String> networks = [];
 
   String selectedDeviceName = '';
@@ -158,14 +158,14 @@ class _MyAppState extends State<MyApp> {
                     itemBuilder: (context, i) {
                       return ListTile(
                         title: Text(
-                          devices[i],
+                          devices[i].name,
                           style: TextStyle(
                             color: Colors.blue.shade700,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
                         onTap: () async {
-                          selectedDeviceName = devices[i];
+                          selectedDeviceName = devices[i].name;
                           await scanWifiNetworks();
                         },
                       );

@@ -1,5 +1,6 @@
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 
+import 'device.dart';
 import 'flutter_esp_ble_prov_method_channel.dart';
 
 abstract class FlutterEspBleProvPlatform extends PlatformInterface {
@@ -27,7 +28,7 @@ abstract class FlutterEspBleProvPlatform extends PlatformInterface {
     throw UnimplementedError('platformVersion() has not been implemented.');
   }
 
-  Future<List<String>> scanBleDevices(String prefix) {
+  Future<List<Device>> scanBleDevices(String prefix) {
     throw UnimplementedError('scanBleDevices has not been implemented.');
   }
 
